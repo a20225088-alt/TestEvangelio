@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Evangelion Personality Test</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --rojo:#d92828;
+    --azul:#4e8fd8;
+    --morado:#8d6cc8;
+    --amarillo:#e5b84b;
+    --rosa:#e889a8;
+
+    --fondo:#050507;
+    --card:#111116;
+    --texto:#f5f5f5;
+    --gris:#aaa;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+    color:var(--texto);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(110,60,140,.25),
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(30,80,150,.18),
+            transparent 35%
+        ),
+
+        #050507;
+
+    overflow-x:hidden;
+}
+
+
+/* =====================================
+   ESTRELLAS
+===================================== */
+
+.estrellas{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:0;
+}
+
+.estrella{
+
+    position:absolute;
+
+    width:2px;
+    height:2px;
+
+    background:white;
+
+    border-radius:50%;
+
+    opacity:.5;
+
+    animation:
+        parpadear
+        2s
+        infinite
+        alternate;
+}
+
+@keyframes parpadear{
+
+    from{
+        opacity:.15;
+    }
+
+    to{
+        opacity:.8;
+    }
+
+}
+
+
+/* =====================================
+   CONTENEDOR
+===================================== */
+
+.contenedor{
+
+    position:relative;
+
+    z-index:2;
+
+    width:min(94vw,650px);
+
+    min-height:500px;
+
+    padding:35px 28px;
+
+    text-align:center;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(20,20,27,.96),
+            rgba(7,7,11,.98)
+        );
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:25px;
+
+    box-shadow:
+
+        0 30px 100px
+        rgba(0,0,0,.9),
+
+        0 0 50px
+        rgba(120,70,170,.12);
+
+    animation:
+
+        aparecer
+        .7s
+        ease;
+}
+
+@keyframes aparecer{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(30px)
+            scale(.95);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+    }
+
+}
+
+
+/* =====================================
+   TITULOS
+===================================== */
+
+.logo{
+
+    font-size:14px;
+
+    letter-spacing:7px;
+
+    color:#999;
+
+    margin-bottom:15px;
+}
+
+h1{
+
+    font-size:
+        clamp(
+            30px,
+            7vw,
+            48px
+        );
+
+    margin-bottom:15px;
+
+    font-weight:300;
+
+    letter-spacing:2px;
+}
+
+h2{
+
+    font-size:
+        clamp(
+            25px,
+            6vw,
+            38px
+        );
+
+    margin-bottom:15px;
+}
+
+.texto{
+
+    font-size:19px;
+
+    line-height:1.6;
+
+    color:#ddd;
+
+    margin-bottom:20px;
+}
+
+.subtexto{
+
+    color:#999;
+
+    font-size:14px;
+
+    margin-top:10px;
+}
+
+
+/* =====================================
+   INPUT
+===================================== */
+
+.inputNombre{
+
+    width:100%;
+
+    max-width:400px;
+
+    padding:15px 20px;
+
+    margin-top:15px;
+
+    border-radius:12px;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.2);
+
+    background:
+
+        rgba(255,255,255,.05);
+
+    color:white;
+
+    font-size:18px;
+
+    text-align:center;
+
+    outline:none;
+
+    transition:.3s;
+}
+
+.inputNombre:focus{
+
+    border-color:#9c6ac7;
+
+    box-shadow:
+
+        0 0 20px
+        rgba(156,106,199,.25);
+}
+
+
+/* =====================================
+   BOTONES
+===================================== */
+
+.boton{
+
+    border:none;
+
+    padding:15px 32px;
+
+    margin-top:20px;
+
+    border-radius:50px;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    color:white;
+
+    cursor:pointer;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #633f7f,
+            #9b5fc2
+        );
+
+    box-shadow:
+
+        0 8px 25px
+        rgba(0,0,0,.5);
+
+    transition:.25s;
+}
+
+.boton:hover{
+
+    transform:
+        translateY(-3px)
+        scale(1.03);
+
+    box-shadow:
+
+        0 12px 35px
+        rgba(130,80,170,.4);
+}
+
+
+/* =====================================
+   PREGUNTAS
+===================================== */
+
+.progreso{
+
+    color:#999;
+
+    font-size:14px;
+
+    letter-spacing:3px;
+
+    margin-bottom:15px;
+}
+
+.pregunta{
+
+    font-size:
+        clamp(
+            21px,
+            5vw,
+            28px
+        );
+
+    line-height:1.4;
+
+    margin-bottom:25px;
+}
+
+.opciones{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:13px;
+}
+
+.opcion{
+
+    width:100%;
+
+    padding:16px 18px;
+
+    text-align:left;
+
+    border-radius:13px;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+
+        rgba(255,255,255,.04);
+
+    color:#eee;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.opcion:hover{
+
+    background:
+
+        rgba(140,90,180,.18);
+
+    border-color:
+
+        rgba(190,130,220,.5);
+
+    transform:
+        translateX(5px);
+}
+
+
+/* =====================================
+   RESULTADO
+===================================== */
+
+.resultado{
+
+    animation:
+
+        resultado
+        1s
+        ease;
+}
+
+@keyframes resultado{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            scale(.85);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            scale(1);
+    }
+
+}
+
+.imagenPersonaje{
+
+    width:min(100%,360px);
+
+    height:420px;
+
+    object-fit:cover;
+
+    object-position:center;
+
+    border-radius:20px;
+
+    margin:20px auto;
+
+    display:block;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.2);
+
+    box-shadow:
+
+        0 20px 60px
+        rgba(0,0,0,.8);
+}
+
+.nombrePersonaje{
+
+    font-size:
+        clamp(
+            32px,
+            8vw,
+            52px
+        );
+
+    letter-spacing:3px;
+
+    margin-bottom:5px;
+}
+
+.compatibilidad{
+
+    font-size:25px;
+
+    margin:10px 0 20px;
+
+    color:#dca4ed;
+}
+
+.descripcion{
+
+    color:#ccc;
+
+    line-height:1.7;
+
+    font-size:17px;
+
+    margin-bottom:20px;
+}
+
+.barra{
+
+    width:100%;
+
+    height:12px;
+
+    background:#222;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin:15px 0;
+}
+
+.barraInterior{
+
+    height:100%;
+
+    border-radius:20px;
+
+    transition:
+        width
+        1.5s
+        ease;
+}
+
+
+/* =====================================
+   COLORES RESULTADOS
+===================================== */
+
+.asuka{
+
+    color:#e94a4a;
+}
+
+.shinji{
+
+    color:#629ce4;
+}
+
+.rei{
+
+    color:#a78ce0;
+}
+
+.misato{
+
+    color:#e0b74d;
+}
+
+
+/* =====================================
+   CARGANDO
+===================================== */
+
+.cargando{
+
+    font-size:20px;
+
+    animation:
+        pulsar
+        1.2s
+        infinite;
+}
+
+@keyframes pulsar{
+
+    0%,100%{
+        opacity:.4;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:600px){
+
+    .contenedor{
+
+        padding:
+            28px 18px;
+    }
+
+    .imagenPersonaje{
+
+        height:380px;
+    }
+
+    .opcion{
+
+        font-size:15px;
+
+        padding:14px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div
+    class="estrellas"
+    id="estrellas">
+</div>
+
+
+<main
+    class="contenedor"
+    id="app">
+</main>
+
+
+<script>
+
+
+/* ==========================================
+   ESTRELLAS
+========================================== */
+
+const estrellas =
+    document.getElementById(
+        "estrellas"
+    );
+
+
+for(
+    let i=0;
+    i<70;
+    i++
+){
+
+    const estrella =
+        document.createElement(
+            "div"
+        );
+
+    estrella.className =
+        "estrella";
+
+    estrella.style.left =
+        Math.random()*100+"vw";
+
+    estrella.style.top =
+        Math.random()*100+"vh";
+
+    estrella.style.animationDelay =
+        Math.random()*2+"s";
+
+    estrellas.appendChild(
+        estrella
+    );
+
+}
+
+
+/* ==========================================
+   DATOS
+========================================== */
+
+
+/*
+
+IMPORTANTE:
+
+Puedes cambiar estas imágenes por las
+que tú quieras.
+
+El código funciona aunque uses tus
+propias imágenes.
+
+Si tienes imágenes descargadas:
+
+    asuka.jpg
+    shinji.jpg
+    rei.jpg
+    misato.jpg
+
+ponlas en la misma carpeta que este HTML
+y cambia las URLs de abajo por:
+
+    "asuka.jpg"
+
+*/
+
+
+const personajes = {
+
+    asuka:{
+
+        nombre:
+            "ASUKA LANGLEY",
+
+        clase:
+            "asuka",
+
+        imagen:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Asuka_Langley_Soryu_cosplay_at_Comiket_105_%28close-up%29.jpg/640px-Asuka_Langley_Soryu_cosplay_at_Comiket_105_%28close-up%29.jpg",
+
+        descripcion:
+
+            "Eres una persona fuerte, competitiva y determinada. Te gusta demostrar tus capacidades y no siempre muestras fácilmente lo que sientes. Puedes ser muy exigente contigo misma, pero detrás de esa seguridad existe una parte sensible que pocas personas llegan a conocer.",
+
+        color:
+            "#d92828"
+
+    },
+
+
+    shinji:{
+
+        nombre:
+            "SHINJI IKARI",
+
+        clase:
+            "shinji",
+
+        /*
+        Puedes reemplazar esta imagen
+        por una imagen de Shinji.
+        */
+
+        imagen:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Neon_Genesis_Evangelion_logo.svg/640px-Neon_Genesis_Evangelion_logo.svg.png",
+
+        descripcion:
+
+            "Tiendes a pensar mucho antes de actuar. Las emociones de los demás pueden afectarte profundamente y buscas sentir que las personas importantes para ti te aceptan. Puedes tener momentos de inseguridad, pero también posees una sensibilidad y una capacidad enorme para comprender a los demás.",
+
+        color:
+            "#4e8fd8"
+
+    },
+
+
+    rei:{
+
+        nombre:
+            "REI AYANAMI",
+
+        clase:
+            "rei",
+
+        imagen:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Rei_Ayanami_cosplay_at_Comiket_106.jpg/640px-Rei_Ayanami_cosplay_at_Comiket_106.jpg",
+
+        descripcion:
+
+            "Eres una persona reservada, observadora y tranquila. No necesitas estar constantemente rodeada de personas para sentirte bien. Sueles analizar las situaciones desde una perspectiva diferente y puedes tener una personalidad mucho más profunda de lo que los demás imaginan.",
+
+        color:
+            "#8d6cc8"
+
+    },
+
+
+    misato:{
+
+        nombre:
+            "MISATO KATSURAGI",
+
+        clase:
+            "misato",
+
+        /*
+        Esta imagen puede sustituirse
+        por una imagen de Misato.
+        */
+
+        imagen:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Neon_Genesis_Evangelion_logo.svg/640px-Neon_Genesis_Evangelion_logo.svg.png",
+
+        descripcion:
+
+            "Eres una persona sociable, protectora y capaz de asumir responsabilidades. Intentas mantener una actitud fuerte incluso cuando tienes tus propios problemas. Te importa mucho la gente que quieres y muchas veces haces más por los demás de lo que ellos llegan a notar.",
+
+        color:
+            "#e0b74d"
+
+    }
+
+};
+
+
+/* ==========================================
+   PREGUNTAS
+
+   Cada opción tiene puntos diferentes.
+
+   A = Asuka
+   S = Shinji
+   R = Rei
+   M = Misato
+========================================== */
+
+
+const preguntas = [
+
+{
+
+    pregunta:
+        "Cuando tienes un problema importante, ¿qué haces primero?",
+
+    opciones:[
+
+        {
+            texto:
+                "Intento resolverlo por mi cuenta.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "Busco a alguien en quien confío.",
+            puntos:
+                {asuka:1, shinji:3, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Me alejo un poco y pienso tranquilamente.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Intento mantener la calma y buscar una solución.",
+            puntos:
+                {asuka:1, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Qué piensas cuando alguien critica algo que hiciste?",
+
+    opciones:[
+
+        {
+            texto:
+                "Me molesta y quiero demostrar que puedo hacerlo mejor.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "Me afecta bastante y pienso en lo que hice mal.",
+            puntos:
+                {asuka:1, shinji:3, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "Escucho la crítica y trato de analizarla.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Intento aprender de ella y continuar.",
+            puntos:
+                {asuka:1, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Cómo eres cuando conoces personas nuevas?",
+
+    opciones:[
+
+        {
+            texto:
+                "Intento causar una buena impresión.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Soy tímido/a al principio.",
+            puntos:
+                {asuka:1, shinji:3, rei:2, misato:1}
+        },
+
+        {
+            texto:
+                "Observo antes de hablar demasiado.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Intento hacer que todos se sientan cómodos.",
+            puntos:
+                {asuka:1, shinji:2, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Qué es más importante para ti?",
+
+    opciones:[
+
+        {
+            texto:
+                "Ser reconocido/a por mis capacidades.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "Sentirme querido/a y aceptado/a.",
+            puntos:
+                {asuka:1, shinji:3, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Tener paz y tranquilidad.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Proteger a las personas que quiero.",
+            puntos:
+                {asuka:1, shinji:2, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "Cuando estás triste, normalmente...",
+
+
+    opciones:[
+
+        {
+            texto:
+                "Intento distraerme y aparentar que estoy bien.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Me encierro bastante en mis pensamientos.",
+            puntos:
+                {asuka:1, shinji:3, rei:2, misato:1}
+        },
+
+        {
+            texto:
+                "Prefiero estar solo/a.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Busco hacer algo que me ayude a sentirme mejor.",
+            puntos:
+                {asuka:1, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Cómo reaccionas cuando alguien que quieres está en problemas?",
+
+    opciones:[
+
+        {
+            texto:
+                "Me lanzo inmediatamente a ayudar.",
+            puntos:
+                {asuka:3, shinji:2, rei:1, misato:3}
+        },
+
+        {
+            texto:
+                "Me preocupo muchísimo.",
+            puntos:
+                {asuka:1, shinji:3, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Intento pensar qué puedo hacer.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:2}
+        },
+
+        {
+            texto:
+                "Intento organizar una solución.",
+            puntos:
+                {asuka:1, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Cuál de estas frases se parece más a ti?",
+
+    opciones:[
+
+        {
+            texto:
+                "No necesito que nadie me diga lo que valgo.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "A veces solo quiero sentir que pertenezco a algún lugar.",
+            puntos:
+                {asuka:1, shinji:3, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "No siempre sé cómo expresar lo que siento.",
+            puntos:
+                {asuka:1, shinji:2, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Aunque tenga problemas, intento ayudar a los demás.",
+            puntos:
+                {asuka:1, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Qué haces cuando tienes que tomar una decisión difícil?",
+
+    opciones:[
+
+        {
+            texto:
+                "Confío en mi determinación.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Pienso mucho en cómo afectará a los demás.",
+            puntos:
+                {asuka:1, shinji:3, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Analizo cuidadosamente todas las posibilidades.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:2}
+        },
+
+        {
+            texto:
+                "Intento elegir la opción más práctica.",
+            puntos:
+                {asuka:1, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Qué te cuesta más?",
+
+    opciones:[
+
+        {
+            texto:
+                "Aceptar que no soy perfecto/a.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "Dejar de preocuparme por lo que piensan de mí.",
+            puntos:
+                {asuka:1, shinji:3, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "Mostrar mis sentimientos.",
+            puntos:
+                {asuka:2, shinji:2, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Reconocer que yo también necesito ayuda.",
+            puntos:
+                {asuka:1, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "Si pudieras elegir una cualidad, ¿cuál escogerías?",
+
+    opciones:[
+
+        {
+            texto:
+                "Fuerza.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Empatía.",
+            puntos:
+                {asuka:1, shinji:3, rei:2, misato:2}
+        },
+
+        {
+            texto:
+                "Calma.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:2}
+        },
+
+        {
+            texto:
+                "Liderazgo.",
+            puntos:
+                {asuka:2, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Cómo reaccionas ante una situación inesperada?",
+
+    opciones:[
+
+        {
+            texto:
+                "Actúo rápidamente.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Primero intento entender qué está pasando.",
+            puntos:
+                {asuka:1, shinji:2, rei:3, misato:2}
+        },
+
+        {
+            texto:
+                "Mantengo la calma y observo.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:2}
+        },
+
+        {
+            texto:
+                "Intento tomar el control de la situación.",
+            puntos:
+                {asuka:2, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Qué tipo de persona te atrae más?",
+
+    opciones:[
+
+        {
+            texto:
+                "Alguien apasionado y seguro de sí mismo.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:1}
+        },
+
+        {
+            texto:
+                "Alguien sensible que comprenda mis emociones.",
+            puntos:
+                {asuka:1, shinji:3, rei:2, misato:2}
+        },
+
+        {
+            texto:
+                "Alguien tranquilo y misterioso.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Alguien divertido, protector y espontáneo.",
+            puntos:
+                {asuka:1, shinji:2, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "Cuando quieres conseguir algo...",
+
+
+    opciones:[
+
+        {
+            texto:
+                "No paro hasta conseguirlo.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Necesito sentir que estoy haciendo lo correcto.",
+            puntos:
+                {asuka:1, shinji:3, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Voy avanzando poco a poco.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:2}
+        },
+
+        {
+            texto:
+                "Organizo todo para conseguirlo.",
+            puntos:
+                {asuka:1, shinji:1, rei:1, misato:3}
+        }
+
+    ]
+
+},
+
+
+{
+
+    pregunta:
+        "¿Qué te gustaría que las personas recordaran de ti?",
+
+    opciones:[
+
+        {
+            texto:
+                "Que fui alguien fuerte.",
+            puntos:
+                {asuka:3, shinji:1, rei:1, misato:2}
+        },
+
+        {
+            texto:
+                "Que fui una persona que comprendía a los demás.",
+            puntos:
+                {asuka:1, shinji:3, rei:2, misato:2}
+        },
+
+        {
+            texto:
+                "Que fui una persona única.",
+            puntos:
+                {asuka:1, shinji:1, rei:3, misato:1}
+        },
+
+        {
+            texto:
+                "Que siempre estuve ahí cuando me necesitaron.",
+            puntos:
+                {asuka:1, shinji:2, rei:1, misato:3}
+        }
+
+    ]
+
+}
+
+];
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let nombre="";
+
+let preguntaActual=0;
+
+let puntos={
+
+    asuka:0,
+
+    shinji:0,
+
+    rei:0,
+
+    misato:0
+
+};
+
+
+const app =
+    document.getElementById(
+        "app"
+    );
+
+
+/* ==========================================
+   PANTALLA INICIAL
+========================================== */
+
+function pantallaNombre(){
+
+    app.innerHTML = `
+
+        <div class="logo">
+
+            NEON GENESIS
+
+        </div>
+
+
+        <h1>
+
+            EVANGELION
+
+        </h1>
+
+
+        <p class="texto">
+
+            ✦ TEST DE PERSONALIDAD ✦
+
+        </p>
+
+
+        <p class="texto">
+
+            Hola.
+
+            <br><br>
+
+            Antes de comenzar necesito
+            saber algo...
+
+            <br>
+
+            <b>¿Cómo te llamas?</b>
+
+        </p>
+
+
+        <input
+
+            class="inputNombre"
+
+            id="nombre"
+
+            type="text"
+
+            maxlength="25"
+
+            placeholder="Escribe tu nombre..."
+
+            autocomplete="off"
+
+        >
+
+
+        <br>
+
+
+        <button
+
+            class="boton"
+
+            onclick="comenzar()">
+
+            COMENZAR
+
+        </button>
+
+
+        <p class="subtexto">
+
+            15 preguntas · 4 personajes · 1 resultado
+
+        </p>
+
+    `;
+
+
+    setTimeout(()=>{
+
+        const input =
+            document.getElementById(
+                "nombre"
+            );
+
+        input.focus();
+
+        input.addEventListener(
+            "keydown",
+            function(e){
+
+                if(
+                    e.key === "Enter"
+                ){
+
+                    comenzar();
+
+                }
+
+            }
+        );
+
+    },100);
+
+}
+
+
+/* ==========================================
+   COMENZAR
+========================================== */
+
+function comenzar(){
+
+    const input =
+        document.getElementById(
+            "nombre"
+        );
+
+    nombre =
+        input.value.trim();
+
+
+    if(!nombre){
+
+        input.style.borderColor =
+            "#d92828";
+
+        input.placeholder =
+            "Escribe tu nombre primero...";
+
+        return;
+
+    }
+
+
+    app.innerHTML = `
+
+        <div class="logo">
+
+            NEON GENESIS EVANGELION
+
+        </div>
+
+
+        <h1>
+
+            Bienvenido/a,
+
+            <span
+                style="color:#dca4ed">
+
+                ${nombre}
+
+            </span>
+
+        </h1>
+
+
+        <p class="texto">
+
+            Empecemos tu test de personalidad.
+
+            <br><br>
+
+            Responde las siguientes
+
+            <b>15 preguntas</b>
+
+            con la mayor sinceridad posible.
+
+            <br><br>
+
+            Al final descubriremos...
+
+            <br>
+
+            <b>
+
+                ¿Qué personaje de Evangelion
+
+                es más compatible contigo?
+
+            </b>
+
+        </p>
+
+
+        <button
+
+            class="boton"
+
+            onclick="mostrarPregunta()">
+
+            EMPEZAR TEST
+
+        </button>
+
+    `;
+
+}
+
+
+/* ==========================================
+   MOSTRAR PREGUNTA
+========================================== */
+
+function mostrarPregunta(){
+
+    const pregunta =
+        preguntas[
+            preguntaActual
+        ];
+
+
+    let opciones="";
+
+
+    pregunta.opciones.forEach(
+        (opcion,index)=>{
+
+            opciones += `
+
+                <button
+
+                    class="opcion"
+
+                    onclick="
+                        responder(${index})
+                    ">
+
+                    ${String.fromCharCode(65+index)}.
+
+                    ${opcion.texto}
+
+                </button>
+
+            `;
+
+        }
+    );
+
+
+    app.innerHTML = `
+
+        <div class="progreso">
+
+            PREGUNTA
+
+            ${preguntaActual+1}
+
+            /
+
+            ${preguntas.length}
+
+        </div>
+
+
+        <h2>
+
+            ${nombre},
+
+        </h2>
+
+
+        <div class="pregunta">
+
+            ${pregunta.pregunta}
+
+        </div>
+
+
+        <div class="opciones">
+
+            ${opciones}
+
+        </div>
+
+
+        <p class="subtexto">
+
+            Responde según lo que realmente harías.
+
+        </p>
+
+    `;
+
+}
+
+
+/* ==========================================
+   RESPONDER
+========================================== */
+
+function responder(indice){
+
+    const opcion =
+        preguntas[
+            preguntaActual
+        ].opciones[
+            indice
+        ];
+
+
+    puntos.asuka +=
+        opcion.puntos.asuka;
+
+
+    puntos.shinji +=
+        opcion.puntos.shinji;
+
+
+    puntos.rei +=
+        opcion.puntos.rei;
+
+
+    puntos.misato +=
+        opcion.puntos.misato;
+
+
+    preguntaActual++;
+
+
+    if(
+        preguntaActual >=
+        preguntas.length
+    ){
+
+        mostrarCalculando();
+
+    }else{
+
+        mostrarPregunta();
+
+    }
+
+}
+
+
+/* ==========================================
+   PANTALLA DE CÁLCULO
+========================================== */
+
+function mostrarCalculando(){
+
+    app.innerHTML = `
+
+        <div class="logo">
+
+            NERV SYSTEM
+
+        </div>
+
+
+        <h1>
+
+            ${nombre}...
+
+        </h1>
+
+
+        <p class="cargando">
+
+            Analizando tus respuestas...
+
+        </p>
+
+
+        <p class="subtexto">
+
+            Comparando compatibilidad
+
+            <br>
+
+            con Asuka · Shinji · Rei · Misato
+
+        </p>
+
+    `;
+
+
+    setTimeout(
+        mostrarResultado,
+        2500
+    );
+
+}
+
+
+/* ==========================================
+   RESULTADO
+========================================== */
+
+function mostrarResultado(){
+
+    let ganador =
+        "asuka";
+
+
+    let mayor =
+        puntos.asuka;
+
+
+    if(
+        puntos.shinji >
+        mayor
+    ){
+
+        ganador =
+            "shinji";
+
+        mayor =
+            puntos.shinji;
+
+    }
+
+
+    if(
+        puntos.rei >
+        mayor
+    ){
+
+        ganador =
+            "rei";
+
+        mayor =
+            puntos.rei;
+
+    }
+
+
+    if(
+        puntos.misato >
+        mayor
+    ){
+
+        ganador =
+            "misato";
+
+        mayor =
+            puntos.misato;
+
+    }
+
+
+    const personaje =
+        personajes[
+            ganador
+        ];
+
+
+    /*
+        Calculamos porcentaje.
+
+        El porcentaje se mantiene
+        dentro de un rango bonito
+        para que el resultado no
+        parezca demasiado bajo.
+    */
+
+
+    const total =
+
+        puntos.asuka +
+
+        puntos.shinji +
+
+        puntos.rei +
+
+        puntos.misato;
+
+
+    let porcentaje =
+        Math.round(
+            (mayor / total) * 100
+        );
+
+
+    if(
+        porcentaje < 55
+    ){
+
+        porcentaje = 55;
+
+    }
+
+
+    if(
+        porcentaje > 97
+    ){
+
+        porcentaje = 97;
+
+    }
+
+
+    app.innerHTML = `
+
+        <div class="resultado">
+
+
+            <div class="logo">
+
+                ✦ RESULTADO FINAL ✦
+
+            </div>
+
+
+            <h2>
+
+                ${nombre},
+
+                tu personaje es...
+
+            </h2>
+
+
+            <img
+
+                class="imagenPersonaje"
+
+                src="${personaje.imagen}"
+
+                alt="${personaje.nombre}"
+
+                onerror="
+                    this.style.display='none'
+                "
+
+            >
+
+
+            <div
+
+                class="nombrePersonaje
+                ${personaje.clase}">
+
+                ${personaje.nombre}
+
+            </div>
+
+
+            <div class="compatibilidad">
+
+                ${porcentaje}% COMPATIBILIDAD
+
+            </div>
+
+
+            <div class="barra">
+
+                <div
+
+                    class="barraInterior"
+
+                    style="
+                        width:${porcentaje}%;
+
+                        background:
+                        ${personaje.color};
+                    ">
+
+                </div>
+
+            </div>
+
+
+            <p class="descripcion">
+
+                ${personaje.descripcion}
+
+            </p>
+
+
+            <p class="texto">
+
+                ✦ ${nombre} + ${personaje.nombre} ✦
+
+            </p>
+
+
+            <button
+
+                class="boton"
+
+                onclick="reiniciar()">
+
+                HACER EL TEST OTRA VEZ
+
+            </button>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==========================================
+   REINICIAR
+========================================== */
+
+function reiniciar(){
+
+    nombre="";
+
+    preguntaActual=0;
+
+    puntos={
+
+        asuka:0,
+
+        shinji:0,
+
+        rei:0,
+
+        misato:0
+
+    };
+
+
+    pantallaNombre();
+
+}
+
+
+/* ==========================================
+   INICIAR
+========================================== */
+
+pantallaNombre();
+
+
+</script>
+
+
+</body>
+
+</html>
